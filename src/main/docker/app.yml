@@ -1,0 +1,18 @@
+version: '2'
+services:
+    mobilemoneycustomerservice-app:
+        image: mobilemoneycustomerservice
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATA_MONGODB_URI=mongodb://mobilemoneycustomerservice-mongodb:27017
+            - SPRING_DATA_MONGODB_DATABASE=MobileMoneyCustomerService
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=mobilemoneycustomerservice-elasticsearch:9300
+    mobilemoneycustomerservice-mongodb:
+        extends:
+            file: mongodb.yml
+            service: mobilemoneycustomerservice-mongodb
+    mobilemoneycustomerservice-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: mobilemoneycustomerservice-elasticsearch

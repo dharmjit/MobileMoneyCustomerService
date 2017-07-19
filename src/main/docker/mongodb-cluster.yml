@@ -1,0 +1,16 @@
+version: '2'
+services:
+    mobilemoneycustomerservice-mongodb:
+        image: mongo:3.2.10
+        ports:
+            - "27017:27017"
+        command: mongos --configdb mobilemoneycustomerservice-mongodb-config
+    mobilemoneycustomerservice-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    mobilemoneycustomerservice-mongodb-config:
+        image: mongo:3.2.10
+        container_name: mobilemoneycustomerservice-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db
